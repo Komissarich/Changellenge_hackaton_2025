@@ -1,4 +1,4 @@
 package com.example.xaxaton.repository;
 
-public class This {
+public interface TeacherRepository {
 }
