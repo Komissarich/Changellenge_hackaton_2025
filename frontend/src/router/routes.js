@@ -1,3 +1,4 @@
+import ErrorNotFound from "src/components/ErrorNotFound.vue";
 import HomePage from "src/components/HomePage.vue";
 
 const routes = [
@@ -8,7 +9,7 @@ const routes = [
 
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/ErrorNotFound.vue"),
+    component: ErrorNotFound,
   },
 ];
 
