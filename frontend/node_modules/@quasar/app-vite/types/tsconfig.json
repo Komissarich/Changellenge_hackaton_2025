@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "Preserve",
+    "strict": true,
+    "lib": ["es2022", "dom"]
+  },
+  "include": ["./**/*.d.ts"]
+}
