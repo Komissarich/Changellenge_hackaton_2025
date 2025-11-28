@@ -8,9 +8,14 @@ const routes = [
   },
 
   {
-    path: "/:catchAll(.*)*",
-    component: ErrorNotFound,
+    path: "/courses",
+    component: HomePage,
   },
+
+  // {
+  //   path: "/:catchAll(.*)*",
+  //   component: ErrorNotFound,
+  // },
 ];
 
 export default routes;

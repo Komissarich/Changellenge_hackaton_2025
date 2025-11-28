@@ -1,24 +1,38 @@
 <template>
   <q-layout view="hHh lpR fff">
     <q-header reveal elevated class="bg-primary text-white">
-      <q-toolbar>
+      <q-toolbar mt-100>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-avatar>
           <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
         </q-avatar>
-        <q-toolbar-title> ПСБ Learn </q-toolbar-title>
-        <q-tabs v-model="tab" shrink class="ml-1 absolute-center">
-          <q-tab icon="school" name="tab1" label="Курсы" />
-          <q-tab icon="message" name="tab2" label="Общение" />
-          <q-tab icon="schedule" name="tab3" label="Расписание" />
+        <q-toolbar-title @click="router.push('/')"> ПСБ Learn </q-toolbar-title>
+        <q-tabs v-model="tab" shrink class="ml-1 absolute-center" inline-label>
+          <q-tab
+            icon="school"
+            name="tab1"
+            label="Курсы"
+            @click="router.push('/courses')"
+          />
+          <q-tab
+            icon="message"
+            name="tab2"
+            label="Общение"
+            @click="router.push('/messages')"
+          />
+          <q-tab
+            icon="calendar_month"
+            name="tab3"
+            label="Расписание"
+            @click="router.push('/calendar')"
+          />
         </q-tabs>
-        <!-- <q-icon name="account-circle" /> -->
+
         <q-btn
           dense
           flat
-          round
           icon="account_circle"
-          @click="toggleLeftDrawer"
+          @click="router.push('/me')"
           label="Аккаунт"
         />
       </q-toolbar>
@@ -59,7 +73,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
 const tab = ref("");
@@ -75,13 +91,12 @@ const menuList = [
     separator: false,
   },
   {
-    icon: "schedule",
+    icon: "calendar_month",
     label: "Расписание",
     separator: false,
   },
 ];
 function toggleLeftDrawer() {
-  console.log(1);
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>
