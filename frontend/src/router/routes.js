@@ -1,46 +1,48 @@
-import AuthLayout from 'layouts/AuthLayout.vue'
-import MainLayout from 'layouts/MainLayout.vue'
+import AuthLayout from "layouts/AuthLayout.vue";
+import MainLayout from "layouts/MainLayout.vue";
 
-import LoginPage from 'pages/Login.vue'
-import RegisterPage from 'pages/RegisterPage.vue'
-import HomePage from 'pages/HomePage.vue'
+import LoginPage from "pages/Login.vue";
+import RegisterPage from "pages/RegisterPage.vue";
+import HomePage from "pages/HomePage.vue";
 
-import Courses from 'components/Courses.vue'
-import CourseInfo from 'components/CourseInfo.vue'
+import Courses from "components/Courses.vue";
+import CourseInfo from "components/CourseInfo.vue";
+
+import CourseInfo from "src/components/CourseInfo.vue";
+import Courses from "src/components/Courses.vue";
+import CreateCourse from "src/components/CreateCourse.vue";
 
 const routes = [
   // Редирект
   {
-    path: '/',
-    redirect: '/login'
+    path: "/",
+    redirect: "/login",
   },
 
   // Авторизация
   {
-    path: '/',
+    path: "/",
     component: AuthLayout,
     children: [
-      { path: 'login', component: LoginPage },
-      { path: 'register', component: RegisterPage }
-    ]
+      { path: "login", component: LoginPage },
+      { path: "register", component: RegisterPage },
+    ],
   },
 
   // Основной интерфейс
   {
-    path: '/app',
+    path: "/app",
     component: MainLayout,
     children: [
-      { path: 'home', component: HomePage },
-      { path: 'courses', component: Courses },
-      { path: 'courses/:course_id', component: CourseInfo }
-    ]
+      { path: "home", component: HomePage },
+      { path: "courses", component: Courses },
+      { path: "courses/:course_id", component: CourseInfo },
+      {
+        path: "/courses/create",
+        component: CreateCourse,
+      },
+    ],
   },
+];
 
-  // 404
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
-]
-
-export default routes
+export default routes;

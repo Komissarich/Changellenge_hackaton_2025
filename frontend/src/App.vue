@@ -3,18 +3,40 @@
     <q-header reveal elevated class="bg-primary text-white">
       <q-toolbar mt-100>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-avatar>
+        <q-avatar class="clickable">
           <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
         </q-avatar>
-        <q-toolbar-title @click="router.push('/')"> ПСБ Learn </q-toolbar-title>
-
+        <q-toolbar-title @click="router.push('/')" class="clickable">
+          ПСБ Learn
+        </q-toolbar-title>
         <q-tabs v-model="tab" shrink class="ml-1 absolute-center" inline-label>
-          <q-tab icon="school" name="tab1" label="Курсы" @click="router.push('/courses')" />
-          <q-tab icon="message" name="tab2" label="Общение" @click="router.push('/messages')" />
-          <q-tab icon="calendar_month" name="tab3" label="Расписание" @click="router.push('/calendar')" />
+          <q-tab
+            icon="school"
+            name="tab1"
+            label="Курсы"
+            @click="router.push('/courses')"
+          />
+          <q-tab
+            icon="message"
+            name="tab2"
+            label="Общение"
+            @click="router.push('/messages')"
+          />
+          <q-tab
+            icon="calendar_month"
+            name="tab3"
+            label="Расписание"
+            @click="router.push('/calendar')"
+          />
         </q-tabs>
 
-        <q-btn dense flat icon="account_circle" @click="router.push('/me')" label="Аккаунт" />
+        <q-btn
+          dense
+          flat
+          icon="account_circle"
+          @click="router.push('/me')"
+          label="Аккаунт"
+        />
       </q-toolbar>
     </q-header>
 
@@ -70,3 +92,9 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>
+
+<style>
+.clickable {
+  cursor: pointer;
+}
+</style>

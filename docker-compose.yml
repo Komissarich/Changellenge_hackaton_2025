@@ -1,0 +1,53 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    networks:
+      - psbLearn_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    volumes:
+      - m2-cache:/root/.m2
+    networks:
+      - psbLearn_network
+    depends_on:
+      postgres_database:
+        condition: service_healthy
+
+  postgres_database:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=new_db
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=new_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U new_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    networks:
+      - psbLearn_network
+
+volumes:
+  postgres_database:
+    name: postgres_database_data
+  m2-cache:
+
+networks:
+  psbLearn_network:
+    driver: bridge

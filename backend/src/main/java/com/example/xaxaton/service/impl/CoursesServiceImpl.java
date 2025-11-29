@@ -6,6 +6,7 @@ import com.example.xaxaton.api.dto.CourseUnsubscribeRequest;
 import com.example.xaxaton.domain.entity.Course;
 import com.example.xaxaton.repository.CoursesRepository;
 import com.example.xaxaton.service.CoursesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,17 +14,12 @@ import java.time.Instant;
 
 @Service
 @Transactional
-
 public class CoursesServiceImpl implements CoursesService {
-    private final CoursesRepository courseRepository;
+    @Autowired
+    private CoursesRepository coursesRepository;
 
 
     // Явный конструктор — IDE сразу видит, что нужно внедрить
-    public CoursesServiceImpl(
-            CoursesRepository courseRepository
-    ) {
-        this.courseRepository = courseRepository;
-    }
 
     @Override
     public void createCourse(CourseCreateRequest request) {
@@ -33,13 +29,16 @@ public class CoursesServiceImpl implements CoursesService {
         course.setDifficulty(request.getDifficulty());
         course.setName(request.getName());
         course.setDuration(request.getDuration());
-        course.setStartDate(request.getStartDate());
         course.setSchedule(request.getSchedule());
+        course.setAuthor_id(request.getAuthor_id());
+        course.setCover_link(request.getCover_link());
+        System.out.println("new_course");
+        System.out.println(course);
+        Course saved = coursesRepository.save(course);
+        System.out.println("new_course");
 
 
-        Course saved = courseRepository.save(course);
-        System.out.println(saved);
-
+        coursesRepository.addTeacher(saved.getId(), request.getAuthor_id());
     }
 
     @Override
