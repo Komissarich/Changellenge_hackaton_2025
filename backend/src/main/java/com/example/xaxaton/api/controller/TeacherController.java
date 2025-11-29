@@ -17,10 +17,10 @@ public class TeacherController {
 
     @CrossOrigin
     @PostMapping("/register")
-    public String createCourse(@RequestBody TeacherRegisterRequest request) {
+    public String registerTeacher(@RequestBody TeacherRegisterRequest request) {
         System.out.println("trying to register teacher");
         teacherService.RegisterTeacher(request);
-        return "successfully created course";
+        return "registered";
     }
 
     @CrossOrigin

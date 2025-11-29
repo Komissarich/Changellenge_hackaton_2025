@@ -72,13 +72,16 @@ const password = ref("");
 const router = useRouter();
 function login() {
   axios
-    .post("/api/teachers/register", {
-      username: name,
-      password: password,
+    .post("/api/teachers/login", {
+      email: email.value,
+      password: password.value,
     })
     .then(function (response) {
-      token.value = response.data.token;
+      // token.value = response.data.token;
       console.log(response.data);
+      localStorage.setItem("email", email.value);
+      localStorage.setItem("password", password.value);
+      localStorage.setItem("isAuth", true);
     })
     .catch(function (error) {
       if (error.response) {

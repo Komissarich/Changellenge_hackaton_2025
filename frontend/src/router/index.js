@@ -19,11 +19,9 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    console.log(1);
     const isAuth = localStorage.getItem("isAuth");
     const publicRoutes = ["/login", "/register"];
 
-    // Если маршрут публичный - пропускаем
     if (publicRoutes.includes(to.path)) {
       return next();
     }

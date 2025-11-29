@@ -78,6 +78,9 @@ function register() {
     .then(function (response) {
       console.log(response);
       console.log(response.data);
+      localStorage.setItem("name", name.value);
+      localStorage.setItem("email", email.value);
+      localStorage.setItem("password", password.value);
     })
     .catch(function (error) {
       if (error.response) {

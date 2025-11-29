@@ -9,7 +9,13 @@
         <q-toolbar-title @click="router.push('/')" class="clickable">
           ПСБ Learn
         </q-toolbar-title>
-        <q-tabs v-model="tab" shrink class="ml-1 absolute-center" inline-label>
+        <q-tabs
+          v-model="tab"
+          shrink
+          class="ml-1 absolute-center"
+          inline-label
+          v-if="!isMobile"
+        >
           <q-tab
             icon="school"
             name="tab1"
@@ -77,11 +83,17 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-
+import { computed } from "vue";
+import { useQuasar } from "quasar";
 const router = useRouter();
 const leftDrawerOpen = ref(false);
 const tab = ref("");
 
+const $q = useQuasar();
+const isMobile = computed(() => {
+  return $q.screen.lt.md; // меньше medium = мобилка (до 1023px)
+  // или можно жёстко: $q.screen.width < 768
+});
 const menuList = [
   { icon: "school", label: "Курсы", separator: false },
   { icon: "message", label: "Общение", separator: false },

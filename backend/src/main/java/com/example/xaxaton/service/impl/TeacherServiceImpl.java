@@ -41,6 +41,7 @@ public class TeacherServiceImpl implements TeacherService {
                 System.out.println("учитель не найден");
                 return false;
             }
+            else if (teacherOpt.)
             else {
                 return true;
             }
