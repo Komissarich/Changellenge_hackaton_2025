@@ -1,1 +1,7 @@
-// app global css in SCSS form
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap");
+
+body {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-feature-settings: "cv11", "ss01";
+  letter-spacing: -0.01em;
+}
