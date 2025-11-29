@@ -217,7 +217,6 @@ async function createCourse() {
       );
     }
     console.log(coverUrl);
-    // 2. Отправляем курс на бэк через axios
     const payload = {
       name: form.value.title,
       description: form.value.description,
@@ -225,7 +224,7 @@ async function createCourse() {
       difficulty: form.value.level,
       schedule: form.value.weekDays.join(","),
       coverUrl: coverUrl,
-      author_id: 0,
+      author_id: localStorage.getItem("id"),
     };
     console.log(payload);
 
