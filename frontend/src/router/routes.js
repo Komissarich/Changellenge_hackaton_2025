@@ -1,47 +1,34 @@
 import AuthLayout from "layouts/AuthLayout.vue";
 import MainLayout from "layouts/MainLayout.vue";
 
-import LoginPage from "pages/Login.vue";
+import Login from "pages/Login.vue";
 import RegisterPage from "pages/RegisterPage.vue";
 import HomePage from "pages/HomePage.vue";
-
-import Courses from "components/Courses.vue";
-import CourseInfo from "components/CourseInfo.vue";
 
 import CourseInfo from "src/components/CourseInfo.vue";
 import Courses from "src/components/Courses.vue";
 import CreateCourse from "src/components/CreateCourse.vue";
+// import Login from "@/pages/Login.vue";
 
 const routes = [
-  // Редирект
   {
     path: "/",
-    redirect: "/login",
+    component: HomePage,
   },
 
-  // Авторизация
   {
-    path: "/",
     component: AuthLayout,
     children: [
-      { path: "login", component: LoginPage },
-      { path: "register", component: RegisterPage },
+      { path: "/login", component: Login },
+      { path: "/register", component: RegisterPage },
     ],
   },
 
-  // Основной интерфейс
+  { path: "/courses", component: Courses },
+  { path: "/courses/:course_id", component: CourseInfo },
   {
-    path: "/app",
-    component: MainLayout,
-    children: [
-      { path: "home", component: HomePage },
-      { path: "courses", component: Courses },
-      { path: "courses/:course_id", component: CourseInfo },
-      {
-        path: "/courses/create",
-        component: CreateCourse,
-      },
-    ],
+    path: "/courses/create",
+    component: CreateCourse,
   },
 ];
 

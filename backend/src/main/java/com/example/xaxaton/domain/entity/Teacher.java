@@ -26,6 +26,17 @@ public class Teacher {
 //        this.courses = courses;
 //    }
 
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

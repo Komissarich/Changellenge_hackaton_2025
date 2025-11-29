@@ -1,50 +1,39 @@
 <template>
   <div class="column items-center">
-
     <div class="page-title text-center">Регистрация</div>
 
+    <q-input filled v-model="email" label="Email" class="auth-input q-mb-md" />
 
+    <q-input filled v-model="name" label="ФИО" class="auth-input q-mb-md" />
     <q-input
       filled
-      v-model="email"
-      label="Email"
+      v-model="password"
+      type="password"
+      label="Пароль"
       class="auth-input q-mb-md"
     />
 
- <q-input
-  filled
-  v-model="password"
-  type="password"
-  label="Пароль"
-  class="auth-input q-mb-md"
-/>
+    <!-- Кнопка создать аккаунт -->
+    <q-btn
+      label="Создать аккаунт"
+      class="auth-btn q-mb-sm"
+      unelevated
+      text-color="white"
+      :style="{ background: '#1C3975' }"
+      @click="register"
+    />
 
- <!-- Кнопка создать аккаунт -->
-<q-btn
-  label="Создать аккаунт"
-  class="auth-btn q-mb-sm"
-  unelevated
-  text-color="white"
-  :style="{ background: '#1C3975' }"
-  @click="register"
-/>
-
-
-<!-- Кнопка — перейти на вход -->
-<q-btn
-  flat
-  label="Войти"
-  class="auth-btn-link q-mt-xs"
-  @click="$router.push('/login')"
-/>
-
-
-
+    <!-- Кнопка — перейти на вход -->
+    <q-btn
+      flat
+      label="Войти"
+      class="auth-btn-link q-mt-xs"
+      @click="$router.push('/login')"
+    />
   </div>
 </template>
 
 <style scoped>
-
 .auth-input {
   width: 350px;
   max-width: 100%;
@@ -62,27 +51,40 @@
 }
 
 .page-title {
-  font-size: 26px;      /* одинаковый размер */
-  font-weight: 700;     /* жирный */
-  color: #1C3975;       /* фирменный синий */
-  margin-bottom: 20px;  /* аккуратное расстояние вниз */
+  font-size: 26px; /* одинаковый размер */
+  font-weight: 700; /* жирный */
+  color: #1c3975; /* фирменный синий */
+  margin-bottom: 20px; /* аккуратное расстояние вниз */
 }
-
-
 </style>
 
-
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+const router = useRouter();
 
-const router = useRouter()
-
-const email = ref('')
-const password = ref('')
+const email = ref("");
+const name = ref("");
+const password = ref("");
 
 function register() {
-  // логика создания профиля
-  router.push('/login') // или на главную — как тебе надо
+  axios
+    .post("http://localhost:8081/api/teachers/register", {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    })
+    .then(function (response) {
+      console.log(response);
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data); // => the response payload
+      }
+      throw error;
+    });
+  router.push("/");
 }
 </script>

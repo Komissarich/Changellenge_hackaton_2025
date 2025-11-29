@@ -36,7 +36,8 @@ public class CoursesServiceImpl implements CoursesService {
         System.out.println(course);
         Course saved = coursesRepository.save(course);
         System.out.println("new_course");
-
+        System.out.println("created");
+        System.out.println(saved);
 
         coursesRepository.addTeacher(saved.getId(), request.getAuthor_id());
     }

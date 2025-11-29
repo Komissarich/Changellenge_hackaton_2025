@@ -1,11 +1,7 @@
 <template>
   <div>
-
     <!-- Заголовок -->
-   <div class="page-title text-center">
-  Вход
-</div>
-
+    <div class="page-title text-center">Вход</div>
 
     <!-- Поля -->
     <q-input
@@ -24,24 +20,22 @@
       class="q-mb-lg"
     />
 
-<q-btn
-  label="Войти"
-  class="auth-btn q-mt-sm q-mb-sm"
-  unelevated
-  text-color="white"
-  :style="{ background: '#1C3975' }"
-  @click="$router.push('/login')"
-/>
+    <q-btn
+      label="Войти"
+      class="auth-btn q-mt-sm q-mb-sm"
+      unelevated
+      text-color="white"
+      :style="{ background: '#1C3975' }"
+      @click="$router.push('/login')"
+    />
 
-<!-- Кнопка — переход на регистрацию -->
-<q-btn
-  label="Регистрация"
-  flat
-  class="auth-btn-link q-mt-xs"
-  @click="$router.push('/register')"
-/>
-
-
+    <!-- Кнопка — переход на регистрацию -->
+    <q-btn
+      label="Регистрация"
+      flat
+      class="auth-btn-link q-mt-xs"
+      @click="$router.push('/register')"
+    />
   </div>
 </template>
 <style scoped>
@@ -49,7 +43,6 @@
   width: 350px;
   max-width: 100%;
 }
-
 
 .auth-btn {
   width: 240px;
@@ -63,30 +56,36 @@
 }
 
 .page-title {
-  font-size: 26px;      /* одинаковый размер */
-  font-weight: 700;     /* жирный */
-  color: #1C3975;       /* фирменный синий */
-  margin-bottom: 20px;  /* аккуратное расстояние вниз */
+  font-size: 26px; /* одинаковый размер */
+  font-weight: 700; /* жирный */
+  color: #1c3975; /* фирменный синий */
+  margin-bottom: 20px; /* аккуратное расстояние вниз */
 }
-
-
 </style>
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+const email = ref("");
 
-  methods: {
-    login() {
-      // здесь твоя логика авторизации
-      // успешный вход → переходим на главную
+const password = ref("");
 
-      this.$router.push('/app/home');
-    }
-  }
+const router = useRouter();
+function login() {
+  axios
+    .post("/api/teachers/register", {
+      username: name,
+      password: password,
+    })
+    .then(function (response) {
+      token.value = response.data.token;
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data); // => the response payload
+      }
+      throw error;
+    });
+  router.push("/");
 }
 </script>
