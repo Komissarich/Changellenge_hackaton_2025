@@ -36,13 +36,7 @@
           />
         </q-tabs>
 
-        <q-btn
-          dense
-          flat
-          icon="account_circle"
-          @click="router.push('/me')"
-          label="Аккаунт"
-        />
+        <q-btn dense flat icon="account_circle" @click="test" label="Аккаунт" />
       </q-toolbar>
     </q-header>
 
@@ -99,6 +93,13 @@ const menuList = [
   { icon: "message", label: "Общение", separator: false },
   { icon: "calendar_month", label: "Расписание", separator: false },
 ];
+
+function test() {
+  console.log(1);
+  localStorage.setItem("isAuth", false);
+  const isAuth = localStorage.getItem("isAuth");
+  console.log(isAuth);
+}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

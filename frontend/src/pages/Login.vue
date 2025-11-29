@@ -26,7 +26,7 @@
       unelevated
       text-color="white"
       :style="{ background: '#1C3975' }"
-      @click="$router.push('/login')"
+      @click="login"
     />
 
     <!-- Кнопка — переход на регистрацию -->
@@ -63,6 +63,7 @@
 }
 </style>
 <script setup>
+import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const email = ref("");
@@ -72,7 +73,7 @@ const password = ref("");
 const router = useRouter();
 function login() {
   axios
-    .post("/api/teachers/login", {
+    .post("http://localhost:8081/api/teachers/login", {
       email: email.value,
       password: password.value,
     })

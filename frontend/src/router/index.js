@@ -20,12 +20,14 @@ export default defineRouter(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     const isAuth = localStorage.getItem("isAuth");
+    console.log("here", isAuth, isAuth == "false");
+
     const publicRoutes = ["/login", "/register"];
 
     if (publicRoutes.includes(to.path)) {
       return next();
     }
-    if (isAuth === null || isAuth === false) {
+    if (isAuth === null || isAuth == "false") {
       console.log("fuck");
       return next({ path: "/login" });
     }

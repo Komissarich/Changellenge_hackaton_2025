@@ -17,15 +17,14 @@ public class TeacherController {
 
     @CrossOrigin
     @PostMapping("/register")
-    public String registerTeacher(@RequestBody TeacherRegisterRequest request) {
+    public Long registerTeacher(@RequestBody TeacherRegisterRequest request) {
         System.out.println("trying to register teacher");
-        teacherService.RegisterTeacher(request);
-        return "registered";
+        return teacherService.RegisterTeacher(request);
     }
 
     @CrossOrigin
     @PostMapping("/login")
-    public String createCourse(@RequestBody LoginTeacherRequest request) {
+    public String loginTeacher(@RequestBody LoginTeacherRequest request) {
         System.out.println("trying to login teacher");
         if (teacherService.LoginTeacher(request)) {
             return "login";

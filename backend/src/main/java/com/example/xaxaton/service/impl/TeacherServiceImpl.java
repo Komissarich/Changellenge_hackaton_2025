@@ -21,7 +21,7 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherRepository teacherRepository;
 
     @Override
-    public void RegisterTeacher(TeacherRegisterRequest request) {
+    public Long RegisterTeacher(TeacherRegisterRequest request) {
         Teacher teacher = new Teacher();
         teacher.setEmail(request.getEmail());
         teacher.setName(request.getName());
@@ -31,6 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher saved = teacherRepository.save(teacher);
         System.out.println("created");
         System.out.println(saved);
+        return saved.getId();
     }
 
         @Override
@@ -41,7 +42,13 @@ public class TeacherServiceImpl implements TeacherService {
                 System.out.println("учитель не найден");
                 return false;
             }
-            else if (teacherOpt.)
+            Teacher teacher = teacherOpt.get();
+
+            // Проверяем пароль
+            if (!teacher.getPassword().equals(request.getPassword())) {
+                System.out.println("Неверный пароль");
+                return false;
+            }
             else {
                 return true;
             }

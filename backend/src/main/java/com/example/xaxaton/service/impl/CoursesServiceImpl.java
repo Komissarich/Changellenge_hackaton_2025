@@ -3,6 +3,7 @@ package com.example.xaxaton.service.impl;
 import com.example.xaxaton.api.dto.CourseCreateRequest;
 import com.example.xaxaton.api.dto.CourseDeleteRequest;
 import com.example.xaxaton.api.dto.CourseUnsubscribeRequest;
+import com.example.xaxaton.api.dto.GetCoursesRequest;
 import com.example.xaxaton.domain.entity.Course;
 import com.example.xaxaton.repository.CoursesRepository;
 import com.example.xaxaton.service.CoursesService;
@@ -11,15 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @Transactional
 public class CoursesServiceImpl implements CoursesService {
     @Autowired
     private CoursesRepository coursesRepository;
-
-
-    // Явный конструктор — IDE сразу видит, что нужно внедрить
 
     @Override
     public void createCourse(CourseCreateRequest request) {
@@ -50,5 +49,10 @@ public class CoursesServiceImpl implements CoursesService {
     @Override
     public void unsubsribeCourse(CourseUnsubscribeRequest request) {
 
+    }
+
+    @Override
+    public List<Course> getCourses(GetCoursesRequest request) {
+        return coursesRepository.findCoursesByTeacherId(request.getTeacher_id());
     }
 }

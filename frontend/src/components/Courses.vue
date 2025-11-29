@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { useUserStore } from "src/stores/user";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -63,28 +64,19 @@ onMounted(() => {
 
   console.log(courses);
   loaded.value = true;
-  //   axios({
-  //     method: "get",
-  //     url: "/api/courses",
-  //     data: {
-  //       name: userStore.username,
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       console.log(response.data);
-  //       //   question.value.text = response.data.question;
-  //       //   question.value.category = response.data.category;
-  //       //   question.value.difficulty = response.data.difficulty;
-  //       //   question.value.answers = response.data.incorrectAnswers;
-  //       //   const index = Math.floor(Math.random() * 3);
-  //       //   question.value.answers.splice(index, 0, response.data.correctAnswer);
-  //       //   question.value.correct = response.data.correctAnswer;
-  //       //   loaded.value = true;
-  //       //   console.log(question.value);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
+  axios
+    .post("http://localhost:8081/api/courses/get", {
+      teacher_id: localStorage.getItem("id"),
+    })
+    .then(function (response) {
+      console.log(response);
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
+    });
 });
 </script>
 

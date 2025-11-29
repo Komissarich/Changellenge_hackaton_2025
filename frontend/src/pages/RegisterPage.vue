@@ -81,12 +81,10 @@ function register() {
       localStorage.setItem("name", name.value);
       localStorage.setItem("email", email.value);
       localStorage.setItem("password", password.value);
+      localStorage.setItem("id", response.data);
     })
     .catch(function (error) {
-      if (error.response) {
-        console.log(error.response.data); // => the response payload
-      }
-      throw error;
+      console.log(error);
     });
   router.push("/");
 }
