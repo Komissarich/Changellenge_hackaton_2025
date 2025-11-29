@@ -1,7 +1,8 @@
 <template>
   <div class="column items-center">
 
-    <div class="text-h4 text-white q-mb-lg">Регистрация</div>
+    <div class="page-title text-center">Регистрация</div>
+
 
     <q-input
       filled
@@ -10,32 +11,66 @@
       class="auth-input q-mb-md"
     />
 
-    <q-input
-      filled
-      v-model="password"
-      type="password"
-      label="Пароль"
-      class="auth-input q-mb-xl"
-    />
+ <q-input
+  filled
+  v-model="password"
+  type="password"
+  label="Пароль"
+  class="auth-input q-mb-md"
+/>
 
-    <!-- ТЁМНО-СИНЯЯ КНОПКА СОЗДАТЬ АККАУНТ -->
-    <q-btn
-      color="#0d2c6b"
-      text-color="white"
-      label="Создать аккаунт"
-      class="auth-btn"
-      @click="register"
-    />
+ <!-- Кнопка создать аккаунт -->
+<q-btn
+  label="Создать аккаунт"
+  class="auth-btn q-mb-sm"
+  unelevated
+  text-color="white"
+  :style="{ background: '#1C3975' }"
+  @click="register"
+/>
 
-    <q-btn
-      flat
-      label="Войти"
-      to="/login"
-      class="auth-btn-link q-mt-md"
-    />
+
+<!-- Кнопка — перейти на вход -->
+<q-btn
+  flat
+  label="Войти"
+  class="auth-btn-link q-mt-xs"
+  @click="$router.push('/login')"
+/>
+
+
 
   </div>
 </template>
+
+<style scoped>
+
+.auth-input {
+  width: 350px;
+  max-width: 100%;
+}
+
+.auth-btn {
+  width: 240px;
+  height: 48px;
+  border-radius: 16px;
+}
+
+.auth-btn-link {
+  color: white;
+  font-size: 15px;
+}
+
+.page-title {
+  font-size: 26px;      /* одинаковый размер */
+  font-weight: 700;     /* жирный */
+  color: #1C3975;       /* фирменный синий */
+  margin-bottom: 20px;  /* аккуратное расстояние вниз */
+}
+
+
+</style>
+
 
 <script setup>
 import { ref } from 'vue'

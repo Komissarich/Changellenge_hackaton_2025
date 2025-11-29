@@ -6,7 +6,8 @@
           <!-- Лого + название — ТОЛЬКО ЗДЕСЬ -->
           <div class="row items-center justify-center q-mb-lg">
             <img src="~assets/icon.png" class="auth-logo" alt="logo" />
-            <div class="text-h5 q-ml-sm auth-title">ПСБ Learn</div>
+           <div class="app-title">ПСБ Learn</div>
+
           </div>
 
           <!-- сюда рендерятся Login.vue или Register.vue -->
@@ -27,6 +28,18 @@ export default {
 .auth-layout {
   background: #eef3ff;
 }
+
+.title-main,
+.title-main * {
+  color: #1C3975 !important;
+}
+
+.app-title {
+  font-size: 28px;   /* увеличили */
+  font-weight: 700;
+  color: #1C3975;
+}
+
 
 /* Сам синий блок */
 .auth-card{
