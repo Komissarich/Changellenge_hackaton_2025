@@ -8,11 +8,8 @@
 ```mermaid
 graph TD
     A[Клиент] --> B(Frontend контейнер)
-    B --> C[http://localhost:9001]
     B --> D(Backend контейнер)
-    D --> E[Spring Boot REST API]
     D --> F(PostgreSQL контейнер)
-    F --> G[PostgreSQL 16]
     B -->H[Yandex Cloud Object Storage]
 
     subgraph Docker Compose
