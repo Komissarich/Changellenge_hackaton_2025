@@ -15,13 +15,10 @@ class YandexCloudService {
     this.bucket = import.meta.env.VITE_YANDEX_BUCKET;
   }
   async uploadHtmlString(htmlString, fileName = "lesson.html") {
-    // Создаём File из строки (именно File, а не Blob — чтобы имя было)
     const file = new File([htmlString], fileName, {
       type: "text/html",
       lastModified: Date.now(),
     });
-
-    // Используем твой уже существующий метод upload() — он у тебя он точно есть!
     const url = await this.upload(file, "articles");
 
     return url;

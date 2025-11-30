@@ -1,4 +1,3 @@
-<!-- src/components/course/CourseCreate.vue -->
 <template>
   <q-page padding>
     <div class="q-mx-auto" style="max-width: 1000px">

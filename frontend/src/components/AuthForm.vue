@@ -57,7 +57,6 @@ const handleSubmit = () => {
   }
 
   console.log('Отправка формы:', mode.value, payload)
-  // здесь ты подключишь запросы на backend
 }
 </script>
 

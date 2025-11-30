@@ -1,7 +1,5 @@
-<!-- src/components/ArticleEditor.vue -->
 <template>
   <div class="article-editor-container">
-    <!-- Тулбар — только если editor готов -->
     <div class="toolbar shadow-2" v-if="editor">
       <q-btn
         flat
@@ -71,7 +69,6 @@
       <q-btn flat round size="sm" icon="image" @click="addImage" />
     </div>
 
-    <!-- Редактор -->
     <EditorContent :editor="editor" class="editor-content" />
   </div>
 </template>

@@ -1,4 +1,3 @@
-<!-- ArticleCreatePage.vue -->
 <template>
   <q-page class="bg-grey-1">
     <div class="q-pa-xl">
