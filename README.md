@@ -27,7 +27,7 @@ graph TD
 | Слой            | Технология                  | Примечание                           |
 | --------------- | --------------------------- | ------------------------------------ |
 | Frontend        | Vue 3 + Quasar Framework    | Composition API, Vite, Pinia         |
-| Редактор        | TipTap (ProseMirror)        | WYSIWYG-редактор статей              |
+| Редактор        | TipTap                      | WYSIWYG-редактор статей              |
 | Хранилище       | Yandex Cloud Object Storage | Прямая загрузка с клиента            |
 | Backend         | Java 21 + Spring Boot 3     | REST API                             |
 | База данных     | PostgreSQL 16               | Полная структура курсов и материалов |
