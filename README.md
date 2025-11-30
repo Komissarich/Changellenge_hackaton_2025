@@ -66,3 +66,9 @@ docker compose up --build
 - Попов Егор - Frontend
 - Безрукавая Анастасия - Frontend
 - Пономарев Данил - ССО
+
+## Демонстрация работы
+
+
+https://github.com/user-attachments/assets/0d80102c-e95c-404d-bb8c-e895c4513b63
+
