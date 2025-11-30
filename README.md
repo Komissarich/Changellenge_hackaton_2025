@@ -7,7 +7,7 @@
 
 ```mermaid
 graph TD
-    A[Клиент (браузер)] -->|HTTP| B(Frontend контейнер)
+    A[Клиент] -->|HTTP| B(Frontend контейнер)
     B -->|порт 9001| C[http://localhost:9001]
     B -->|API| D(Backend контейнер)
     D -->|порт 8081| E[Spring Boot REST API]
@@ -49,3 +49,14 @@ git clone https://github.com/Komissarich/Changellenge_hackaton_2025
 cd Changellenge_hackaton_2025
 docker compose up --build
 ```
+
+Приложение доступно по адресу: http://localhost:9001
+
+## Реализованные возможности
+
+- Создание курсов и управление материалами
+- Редактор статей с поддержкой изображений
+- Прямая загрузка файлов и готовых HTML-страниц в Yandex Cloud Object Storage
+- Автоматический экспорт статей в самостоятельные .html-файлы
+- Создание заданий для студентов (демо-режим с сохранением в localStorage)
+- Адаптивный интерфейс на базе Quasar Framework
