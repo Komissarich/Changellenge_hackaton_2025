@@ -7,13 +7,13 @@
 
 ```mermaid
 graph TD
-    A[Клиент] -->|HTTP| B(Frontend контейнер)
-    B -->|порт 9001| C[http://localhost:9001]
-    B -->|API| D(Backend контейнер)
-    D -->|порт 8081| E[Spring Boot REST API]
-    D -->|JDBC| F(PostgreSQL контейнер)
-    F -->|порт 5432| G[PostgreSQL 16]
-    B -->|прямые PUT-запросы| H[Yandex Cloud Object Storage]
+    A[Клиент] --> B(Frontend контейнер)
+    B --> C[http://localhost:9001]
+    B --> D(Backend контейнер)
+    D --> E[Spring Boot REST API]
+    D --> F(PostgreSQL контейнер)
+    F --> G[PostgreSQL 16]
+    B -->H[Yandex Cloud Object Storage]
 
     subgraph Docker Compose
         B & D & F
