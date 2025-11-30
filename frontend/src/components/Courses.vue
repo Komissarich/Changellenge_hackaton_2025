@@ -24,7 +24,7 @@
           @click="router.push(`/courses/${course.id}`)"
         >
           <q-img
-            src="https://cdn.quasar.dev/img/mountains.jpg"
+            :src="course.cover_link"
             height="200px"
             width="300px"
             class="relative-position img_inner"
@@ -33,7 +33,7 @@
             <div
               class="absolute-bottom text-h6 text-white q-pl-md q-pb-md text-shadow"
             >
-              {{ course.title }}
+              {{ course.name }}
             </div>
           </q-img>
 
@@ -55,13 +55,8 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const loaded = ref(false);
 const userStore = useUserStore();
-const courses = [];
+const courses = ref([]);
 onMounted(() => {
-  courses.push({ title: "Программирование на Python", id: "aksdka1" });
-  courses.push({ title: "Программирование на Java", id: "dddd1" });
-  courses.push({ title: "Программирование на Python", id: "aksdka1" });
-  courses.push({ title: "Программирование на Java", id: "dddd1" });
-
   console.log(courses);
   loaded.value = true;
   axios
@@ -71,6 +66,7 @@ onMounted(() => {
     .then(function (response) {
       console.log(response);
       console.log(response.data);
+      courses.value = response.data;
     })
     .catch(function (error) {
       if (error.response) {

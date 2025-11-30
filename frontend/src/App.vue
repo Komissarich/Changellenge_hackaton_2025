@@ -4,7 +4,7 @@
       <q-toolbar mt-100>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-avatar class="clickable">
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          <img src="./assets/icon.png" />
         </q-avatar>
         <q-toolbar-title @click="router.push('/')" class="clickable">
           ПСБ Learn
@@ -42,7 +42,29 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" bordered>
       <q-list>
-        <template v-for="(menuItem, index) in menuList" :key="index">
+        <q-item clickable v-ripple @click="router.push('/courses')">
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+
+          <q-item-section> Курсы </q-item-section>
+        </q-item>
+        <q-item clickable v-ripple @click="router.push('/chat')">
+          <q-item-section avatar>
+            <q-icon name="message" />
+          </q-item-section>
+
+          <q-item-section> Общение </q-item-section>
+        </q-item>
+        <q-item clickable v-ripple @click="router.push('/calendar')">
+          <q-item-section avatar>
+            <q-icon name="calendar_month" />
+          </q-item-section>
+
+          <q-item-section> Расписание </q-item-section>
+        </q-item>
+
+        <!-- <template v-for="(menuItem, index) in menuList" :key="index">
           <q-item clickable v-ripple>
             <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
@@ -53,7 +75,7 @@
           </q-item>
 
           <q-separator :key="'sep' + index" v-if="menuItem.separator" />
-        </template>
+        </template> -->
       </q-list>
     </q-drawer>
 
@@ -88,11 +110,6 @@ const isMobile = computed(() => {
   return $q.screen.lt.md; // меньше medium = мобилка (до 1023px)
   // или можно жёстко: $q.screen.width < 768
 });
-const menuList = [
-  { icon: "school", label: "Курсы", separator: false },
-  { icon: "message", label: "Общение", separator: false },
-  { icon: "calendar_month", label: "Расписание", separator: false },
-];
 
 function test() {
   console.log(1);

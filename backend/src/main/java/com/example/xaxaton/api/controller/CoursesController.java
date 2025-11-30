@@ -1,11 +1,9 @@
 package com.example.xaxaton.api.controller;
 
 
-import com.example.xaxaton.api.dto.CourseCreateRequest;
-import com.example.xaxaton.api.dto.CourseDeleteRequest;
-import com.example.xaxaton.api.dto.CourseUnsubscribeRequest;
-import com.example.xaxaton.api.dto.GetCoursesRequest;
+import com.example.xaxaton.api.dto.*;
 import com.example.xaxaton.domain.entity.Course;
+import com.example.xaxaton.domain.entity.Material;
 import com.example.xaxaton.service.CoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @CrossOrigin
-//@CrossOrigin(origins = "http://localhost:9001", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS})
 public class CoursesController {
     @Autowired
     private CoursesService courseService;
@@ -46,5 +43,25 @@ public class CoursesController {
         System.out.println("trying to unsubscribe to course");
         courseService.unsubsribeCourse(request);
         return "successfully unsubscribed course";
+    }
+
+    @PostMapping("/findCourse")
+    public Course getCourse(@RequestBody GetCourseRequest request) {
+        System.out.println("trying to get one course");
+        return courseService.getCourse(request);
+    }
+
+    @PostMapping("/createMaterial")
+    public String createMaterial(@RequestBody CreateMaterialRequest request) {
+        System.out.println("trying to create material");
+        courseService.createMaterial(request);
+        return "created material";
+    }
+
+    @PostMapping("/getMaterials")
+    public List<Material> createMaterial(@RequestBody GetMaterialsRequest request) {
+        System.out.println("trying to get materials from course");
+        System.out.println(request.getCourse_id());
+        return courseService.getMaterials(request);
     }
 }

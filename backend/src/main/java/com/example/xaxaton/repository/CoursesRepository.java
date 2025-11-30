@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CoursesRepository extends JpaRepository<Course, Long> {
     @Modifying
@@ -32,4 +34,7 @@ public interface CoursesRepository extends JpaRepository<Course, Long> {
     WHERE ct.teacher_id = :teacherId
     """, nativeQuery = true)
     List<Course> findCoursesByTeacherId(@Param("teacherId") Long teacherId);
+
+
+    Optional<Course> findById(String id);
 }

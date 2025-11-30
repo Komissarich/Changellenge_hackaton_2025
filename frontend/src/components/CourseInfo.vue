@@ -1,23 +1,63 @@
 <script setup>
+import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
+import CreateMaterial from "./CreateMaterial.vue";
+import Material from "./Material.vue";
 
-// имитация данных (заменишь на API)
+import CreateTaskDialog from "./CreateTaskDialog.vue";
+
+const router = useRouter();
+onMounted(() => {
+  localStorage.setItem("current_course", route.params.course_id);
+  axios
+    .post("http://localhost:8081/api/courses/findCourse", {
+      id: route.params.course_id,
+    })
+    .then(function (response) {
+      console.log("Course", response.data);
+      course.value.title = response.data.name;
+      course.value.description = response.data.description;
+      course.value.duration = response.data.duration;
+      course.value.level = response.data.difficulty;
+      course.value.cover = response.data.cover_link;
+      var today = new Date();
+      var day = String(today.getDate()).padStart(2, "0");
+      var month = String(today.getMonth() + 1).padStart(2, "0");
+      var year = today.getFullYear();
+      var currentDate = `${day}.${month}.${year}`;
+      course.value.createdAt = currentDate;
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
+    });
+  console.log("id", route.params.course_id);
+  axios
+    .post("http://localhost:8081/api/courses/getMaterials", {
+      course_id: route.params.course_id,
+    })
+    .then(function (response) {
+      console.log("materials", response.data);
+      materials.value = response.data;
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
+    });
+});
+
+const materials = ref([]);
+
+const showDialog = ref(false);
+const showTaskDialog = ref(false);
 const route = useRoute();
 const courseId = route.params.id;
 
-const course = ref({
-  id: courseId,
-  title: "Программирование на Java с нуля до Senior",
-  description:
-    "Полный курс от переменных до Spring Boot, микросервисов и рефакторинга legacy-кода. 120+ часов практики, 15 проектов в портфолио.",
-  cover: "https://cdn.quasar.dev/img/mountains.jpg",
-  duration: "120 часов",
-  level: "Middle",
-  students: 156,
-  rating: 4.92,
-  createdAt: "15 марта 2025",
-});
+const course = ref({});
 
 const teachers = ref([
   {
@@ -60,10 +100,50 @@ const students = ref([
   { id: 1, name: "Иван Петров", progress: 87 },
   { id: 2, name: "Анна Смирнова", progress: 65 },
   { id: 3, name: "Дмитрий Кузнецов", progress: 100 },
-  // ... и ещё 150+
+]);
+const tasks = ref([
+  {
+    id: 1,
+    title: 'Написать эссе на тему "Почему я люблю Vue 3"',
+    description:
+      "<p>Объём — не менее 1000 символов. Используйте <strong>жирный текст</strong> и списки.</p>",
+    type: "TEXT",
+  },
+  {
+    id: 2,
+    title: "Загрузить презентацию проекта",
+    description: "<p>Формат: PDF или PPTX. Не более 20 слайдов.</p>",
+    type: "FILE",
+  },
+  {
+    id: 3,
+    title: "Практика: Реализовать ToDo-лист на Pinia",
+    description:
+      "<p>Требования: добавление, удаление, фильтры. Код прикрепить как ZIP или GitHub-ссылку.</p>",
+    type: "FILE",
+  },
 ]);
 
+const existing = JSON.parse(localStorage.getItem("course_tasks") || "[]");
+console.log("exists", existing);
+for (let task of existing) {
+  tasks.value.push(task);
+}
 const activeTab = ref("info");
+
+function changeCreate() {
+  showDialog.value = true;
+}
+
+function changeCreateTask() {
+  showTaskDialog.value = true;
+}
+
+function goToTask(title, description, task_id) {
+  localStorage.setItem("task_title", title);
+  localStorage.setItem("task_description", description);
+  router.push(`/courses/${route.params.course_id}/tasks/${task_id}`);
+}
 </script>
 
 <template>
@@ -136,7 +216,8 @@ const activeTab = ref("info");
                           ><q-icon name="access_time" color="primary"
                         /></q-item-section>
                         <q-item-section
-                          >Длительность: {{ course.duration }}</q-item-section
+                          >Длительность:
+                          {{ course.duration }} часов</q-item-section
                         >
                       </q-item>
                     </q-list>
@@ -163,61 +244,68 @@ const activeTab = ref("info");
               </div>
             </q-tab-panel>
 
-            <!-- Вкладка: Материалы -->
             <q-tab-panel name="materials">
               <div class="q-pa-xl">
-                <div class="text-h6 q-mb-lg">Материалы курса (42)</div>
+                <div class="text-h6 q-mb-lg">Материалы курса</div>
+                <q-btn
+                  color="primary"
+                  icon="add"
+                  label="Добавить материал"
+                  unelevated
+                  @click="changeCreate"
+                  style="margin-bottom: 10px"
+                />
                 <q-list separator>
-                  <q-item clickable v-ripple>
-                    <q-item-section avatar
-                      ><q-icon name="play_circle color='red'"
-                    /></q-item-section>
-                    <q-item-section
-                      >Введение в Java. Установка JDK</q-item-section
-                    >
-                    <q-item-section side
-                      ><q-icon name="download"
-                    /></q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple>
-                    <q-item-section avatar
-                      ><q-icon name="article" color="blue"
-                    /></q-item-section>
-                    <q-item-section>Конспект: OOP в Java</q-item-section>
-                    <q-item-section side
-                      ><q-badge color="green">PDF</q-badge></q-item-section
-                    >
-                  </q-item>
-                  <!-- ещё 40 пунктов -->
+                  <Material
+                    v-for="material in materials"
+                    :key="material.id"
+                    :material="material"
+                  />
                 </q-list>
+                <CreateMaterial v-model="showDialog" />
               </div>
             </q-tab-panel>
 
-            <!-- Вкладка: Задания -->
             <q-tab-panel name="tasks">
               <div class="q-pa-xl">
-                <div class="text-h6 q-mb-lg">Задания (18)</div>
-                <q-markup-table flat bordered>
-                  <thead>
-                    <tr>
-                      <th>Задание</th>
-                      <th>Срок</th>
-                      <th>Статус</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Калькулятор на Swing</td>
-                      <td>25 ноября</td>
-                      <td><q-badge color="green">Сдано</q-badge></td>
-                    </tr>
-                    <tr>
-                      <td>REST API на Spring Boot</td>
-                      <td>30 ноября</td>
-                      <td><q-badge color="orange">На проверке</q-badge></td>
-                    </tr>
-                  </tbody>
-                </q-markup-table>
+                <div class="row items-center justify-between q-mb-lg">
+                  <div class="text-h6">Задания курса</div>
+
+                  <q-btn
+                    color="primary"
+                    icon="add"
+                    label="Добавить задание"
+                    unelevated
+                    @click="changeCreateTask"
+                  />
+                </div>
+
+                <q-list separator bordered class="rounded-borders">
+                  <q-item
+                    v-for="task in tasks"
+                    :key="task.id"
+                    clickable
+                    v-ripple
+                    @click="goToTask(task.title, task.description, task.id)"
+                    class="q-py-md"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="assignment" color="orange" size="lg" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label class="text-weight-medium">
+                        {{ task.title }}
+                      </q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-icon name="chevron_right" />
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+
+                <CreateTaskDialog v-model="showTaskDialog" />
               </div>
             </q-tab-panel>
           </q-tab-panels>

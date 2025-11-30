@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@tiptap/extension-image": "^3.11.1",
+    "@tiptap/starter-kit": "^3.11.1",
+    "@tiptap/vue-3": "^3.11.1"
+  }
+}

@@ -8,7 +8,9 @@ import HomePage from "pages/HomePage.vue";
 import CourseInfo from "src/components/CourseInfo.vue";
 import Courses from "src/components/Courses.vue";
 import CreateCourse from "src/components/CreateCourse.vue";
-// import Login from "@/pages/Login.vue";
+import CreateMaterial from "src/components/CreateMaterial.vue";
+import ArticleCreatePage from "src/components/ArticleCreatePage.vue";
+import TaskView from "src/components/TaskView.vue";
 
 const routes = [
   {
@@ -29,6 +31,13 @@ const routes = [
   {
     path: "/courses/create",
     component: CreateCourse,
+  },
+  { path: "/create_material", component: CreateMaterial },
+  { path: "/create_article", component: ArticleCreatePage },
+  {
+    path: "/courses/:courseId/tasks/:taskId",
+    name: "task-view",
+    component: TaskView,
   },
 ];
 

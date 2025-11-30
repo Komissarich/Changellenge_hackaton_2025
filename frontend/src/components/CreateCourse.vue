@@ -197,17 +197,11 @@ function clearCover() {
 
 async function createCourse() {
   if (!isValid.value) return;
-
   loading.value = true;
   uploadProgress.value = 0;
-
   try {
     let coverUrl = null;
-
-    // 1. Загружаем обложку в Яндекс.Облако
     if (form.value.coverFile) {
-      console.log("Загружаем обложку...");
-
       coverUrl = await yandexCloud.upload(
         form.value.coverFile,
         "covers",
@@ -223,7 +217,7 @@ async function createCourse() {
       duration: form.value.durationHours.toString(),
       difficulty: form.value.level,
       schedule: form.value.weekDays.join(","),
-      coverUrl: coverUrl,
+      cover_link: coverUrl,
       author_id: localStorage.getItem("id"),
     };
     console.log(payload);

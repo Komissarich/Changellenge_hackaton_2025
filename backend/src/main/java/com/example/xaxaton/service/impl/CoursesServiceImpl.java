@@ -1,11 +1,11 @@
 package com.example.xaxaton.service.impl;
 
-import com.example.xaxaton.api.dto.CourseCreateRequest;
-import com.example.xaxaton.api.dto.CourseDeleteRequest;
-import com.example.xaxaton.api.dto.CourseUnsubscribeRequest;
-import com.example.xaxaton.api.dto.GetCoursesRequest;
+import com.example.xaxaton.api.dto.*;
 import com.example.xaxaton.domain.entity.Course;
+import com.example.xaxaton.domain.entity.Material;
+import com.example.xaxaton.domain.entity.Teacher;
 import com.example.xaxaton.repository.CoursesRepository;
+import com.example.xaxaton.repository.MaterialRepository;
 import com.example.xaxaton.service.CoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class CoursesServiceImpl implements CoursesService {
     @Autowired
     private CoursesRepository coursesRepository;
+
+    @Autowired
+    private MaterialRepository materialRepository;
 
     @Override
     public void createCourse(CourseCreateRequest request) {
@@ -56,5 +60,33 @@ public class CoursesServiceImpl implements CoursesService {
     @Override
     public List<Course> getCourses(GetCoursesRequest request) {
         return coursesRepository.findCoursesByTeacherId(request.getTeacher_id());
+    }
+
+    @Override
+    public Course getCourse(GetCourseRequest request) {
+        Optional<Course> coursesOpt = coursesRepository.findById(request.getId());
+
+        if (coursesOpt.isEmpty()) {
+            System.out.println("учитель не найден");
+            return null;
+        }
+        return coursesOpt.get();
+    }
+
+    @Override
+    public void createMaterial(CreateMaterialRequest request) {
+        Material material = new Material();
+        material.setCourse_id(request.getCourse_id());
+        material.setFile_link(request.getFile_link());
+        material.setType(request.getType());
+        material.setTitle(request.getTitle());
+        Material saved = materialRepository.save(material);
+        System.out.println("material");
+        System.out.println(saved);
+    }
+
+    @Override
+    public List<Material> getMaterials(GetMaterialsRequest request) {
+        return materialRepository.findMaterialsByCourseId(request.getCourse_id());
     }
 }
