@@ -8,12 +8,14 @@ services:
       - "9001:9001"
     networks:
       - psbLearn_network
+    mem_limit: 64m
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-
+    mem_limit: 512m # ← ЭТО РАБОТАЕТ ВЕЗДЕ
+    mem_reservation: 256m
     ports:
       - "8081:8081"
     volumes:
