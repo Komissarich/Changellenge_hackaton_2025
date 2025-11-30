@@ -26,14 +26,24 @@ const routes = [
     ],
   },
 
-  { path: "/courses", component: Courses },
-  { path: "/courses/:course_id", component: CourseInfo },
   {
-    path: "/courses/create",
-    component: CreateCourse,
+    path: "/app",
+    component: MainLayout,
+    children: [
+      { path: "home", component: HomePage },
+      { path: "courses", component: Courses },
+      { path: "courses/:course_id", component: CourseInfo },
+      { path: "schedule", component: () => import("pages/SchedulePage.vue") },
+      { path: "account", component: () => import("pages/ProfilePage.vue") },
+    ],
   },
+
+  // твой маршрут
+  { path: "/courses/create", component: CreateCourse },
+
   { path: "/create_material", component: CreateMaterial },
   { path: "/create_article", component: ArticleCreatePage },
+
   {
     path: "/courses/:courseId/tasks/:taskId",
     name: "task-view",

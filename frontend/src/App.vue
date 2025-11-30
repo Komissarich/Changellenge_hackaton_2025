@@ -1,126 +1,98 @@
 <template>
   <q-layout view="hHh lpR fff">
     <q-header reveal elevated class="bg-primary text-white">
-      <q-toolbar mt-100>
+      <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
         <q-avatar class="clickable">
           <img src="./assets/icon.png" />
         </q-avatar>
-        <q-toolbar-title @click="router.push('/')" class="clickable">
+
+        <q-toolbar-title @click="$router.push('/')" class="clickable">
           ПСБ Learn
         </q-toolbar-title>
-        <q-tabs
-          v-model="tab"
-          shrink
-          class="ml-1 absolute-center"
-          inline-label
-          v-if="!isMobile"
-        >
-          <q-tab
-            icon="school"
-            name="tab1"
-            label="Курсы"
-            @click="router.push('/courses')"
-          />
-          <q-tab
-            icon="message"
-            name="tab2"
-            label="Общение"
-            @click="router.push('/messages')"
-          />
-          <q-tab
-            icon="calendar_month"
-            name="tab3"
-            label="Расписание"
-            @click="router.push('/calendar')"
-          />
+
+        <!-- Табы сверху -->
+        <q-tabs v-model="tab" shrink class="ml-1 absolute-center" inline-label>
+          <q-tab icon="school" name="courses" label="Курсы" to="/app/courses" />
+
+          <q-tab icon="message" name="chat" label="Общение" to="/app/chat" />
+
+          <q-tab icon="schedule" name="schedule" label="Расписание" to="/app/schedule" />
         </q-tabs>
 
-        <q-btn dense flat icon="account_circle" @click="test" label="Аккаунт" />
+        <q-btn dense flat round icon="account_circle" label="Аккаунт" @click="goToAccount" />
       </q-toolbar>
     </q-header>
 
+    <!-- Боковое меню -->
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" bordered>
       <q-list>
-        <q-item clickable v-ripple @click="router.push('/courses')">
+
+        <q-item clickable to="/app/home">
+          <q-item-section avatar>
+            <q-icon name="home" />
+          </q-item-section>
+          <q-item-section>Главная</q-item-section>
+        </q-item>
+
+        <q-item clickable to="/app/courses">
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>
-
-          <q-item-section> Курсы </q-item-section>
+          <q-item-section>Курсы</q-item-section>
         </q-item>
-        <q-item clickable v-ripple @click="router.push('/chat')">
+
+        <q-item clickable to="/app/schedule">
           <q-item-section avatar>
-            <q-icon name="message" />
+            <q-icon name="schedule" />
           </q-item-section>
-
-          <q-item-section> Общение </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple @click="router.push('/calendar')">
-          <q-item-section avatar>
-            <q-icon name="calendar_month" />
-          </q-item-section>
-
-          <q-item-section> Расписание </q-item-section>
+          <q-item-section>Расписание</q-item-section>
         </q-item>
 
-        <!-- <template v-for="(menuItem, index) in menuList" :key="index">
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon :name="menuItem.icon" />
-            </q-item-section>
-            <q-item-section>
-              {{ menuItem.label }}
-            </q-item-section>
-          </q-item>
-
-          <q-separator :key="'sep' + index" v-if="menuItem.separator" />
-        </template> -->
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <q-footer class="bg-grey-1 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          <div>Title</div>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
   </q-layout>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { computed } from "vue";
-import { useQuasar } from "quasar";
-const router = useRouter();
-const leftDrawerOpen = ref(false);
-const tab = ref("");
 
-const $q = useQuasar();
-const isMobile = computed(() => {
-  return $q.screen.lt.md; // меньше medium = мобилка (до 1023px)
-  // или можно жёстко: $q.screen.width < 768
-});
+<script>
+export default {
+  name: "App",
 
-function test() {
-  console.log(1);
-  localStorage.setItem("isAuth", false);
-  const isAuth = localStorage.getItem("isAuth");
-  console.log(isAuth);
-}
+  data() {
+    return {
+      tab: "",
+      leftDrawerOpen: false,
+    };
+  },
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+  methods: {
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
+
+    goToAccount() {
+      this.$router.push("/app/account");
+    }
+  },
+
+  watch: {
+    $route(to) {
+      const last = to.path.split("/").pop();
+      this.tab = last;
+    }
+  },
+
+  mounted() {
+    const last = this.$route.path.split("/").pop();
+    this.tab = last;
+  }
+};
 </script>
 
 <style>
